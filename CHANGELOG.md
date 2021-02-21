@@ -1,4 +1,4 @@
-## 0.0.2 - TBD
+## 0.0.2 - 2021-02-21
 
 - preserve the function name of the default export when minified
 
