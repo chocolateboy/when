@@ -207,8 +207,8 @@ multiple times, though arranging for the delegate to only be called once is
 still recommended in this case to avoid spamming it with redundant calls.
 
 ```javascript
-const onBeforeLoad = when(done => {
-    window.addEventListener('onbeforeload', done, { once: true })
+const onBeforeUnload = when(done => {
+    window.addEventListener('beforeunload', done, { once: true })
 })
 ```
 
