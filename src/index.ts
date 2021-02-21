@@ -14,6 +14,10 @@ export interface Subscribe {
 // when the return value is a promise (no listener)
 const DUMMY_KEY = Symbol()
 
+const defer = typeof queueMicrotask === 'function'
+    ? queueMicrotask
+    : ((fn: () => void) => Promise.resolve().then(fn))
+
 const checkFunction = <T>(value: T, name: string) => {
     if (typeof value === 'function') {
         return value
@@ -34,7 +38,7 @@ const when = (callback: Callback, onError: ErrorHandler = console.error) => {
 
     const listeners = new Map<symbol, Listener>()
 
-    const run = (fn: Listener) => queueMicrotask(() => {
+    const run = (fn: Listener) => defer(() => {
         try {
             fn()
         } catch (e) {
