@@ -229,7 +229,7 @@ The following NPM scripts are available:
 # SEE ALSO
 
 - [fixed-event][] - EventEmitter for one-time tasks
-- [ipc-event-emitter][] - an EventEmitter wrapper for IPC between parent and child processes with support for states (AKA pinned events)
+- [ipc-event-emitter][] - an EventEmitter wrapper for IPC between parent and child processes with support for pinned events
 - [wl][] - whenable events implementation
 
 # VERSION

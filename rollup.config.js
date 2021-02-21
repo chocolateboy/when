@@ -21,7 +21,7 @@ const $terser = terser({
     ecma: 2015,
     compress: {
         passes: 2,
-        reduce_vars: false,
+        keep_fnames: /\bwhen\b/,
     },
     mangle: {
         reserved: ['when'],

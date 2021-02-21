@@ -31,7 +31,7 @@ const checkFunction = <T>(value: T, name: string) => {
     )
 }
 
-const when = (callback: Callback, onError: ErrorHandler = console.error) => {
+export default function when (callback: Callback, onError: ErrorHandler = console.error) {
     type Result = { this: unknown; args: any[] };
 
     let result: Result | undefined
@@ -85,5 +85,3 @@ const when = (callback: Callback, onError: ErrorHandler = console.error) => {
 
     return subscribe as Subscribe
 }
-
-export default when
