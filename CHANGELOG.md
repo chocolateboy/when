@@ -1,3 +1,7 @@
+## 0.0.4 - TBD
+
+- documentation tweaks
+
 ## 0.0.3 - 2021-02-21
 
 - preserve the function name of the default export in the minfied UMD

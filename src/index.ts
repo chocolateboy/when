@@ -7,17 +7,34 @@ export interface Subscribe {
     (listener: Listener): () => boolean;
 };
 
-// a default key which is guaranteed to *not* be found in the listeners map
-// (Map<symbol, Listener>)
-//
-// used to look up the listener (and fail) when the event has already fired or
-// when the return value is a promise (no listener)
+/*
+ * a default key which is guaranteed to *not* be found in the listeners map
+ * (Map<symbol, Listener>)
+ *
+ * used to look up a listener (and fail) when the delegating function has
+ * already been executed, or when an internal listener is generated (for
+ * promises)
+ */
 const DUMMY_KEY = Symbol()
 
+/*
+ * execute a listener non-synchronously (in a microtask)
+ */
 const defer = typeof queueMicrotask === 'function'
     ? queueMicrotask
     : ((fn: () => void) => Promise.resolve().then(fn))
 
+/*
+ * a validation function which returns the supplied value if it has the
+ * required type, or raises a TypeError if it doesn't.
+ *
+ * this kind of function usually takes a type/types parameter but we don't need
+ * that here as all the checked values are functions:
+ *
+ *   - the callback (required)
+ *   - the error handler (optional)
+ *   - each listener (optional)
+ */
 const checkFunction = <T>(value: T, name: string) => {
     if (typeof value === 'function') {
         return value
@@ -31,6 +48,22 @@ const checkFunction = <T>(value: T, name: string) => {
     )
 }
 
+/*
+ * pass a delegating function (e.g. `done`) into the supplied callback. when
+ * invoked, this function forwards the call to all registered listeners, passing
+ * them the same `this` value and arguments. the listeners are then
+ * unregistered, i.e. they're only called once.
+ *
+ * if an optional error-handler is supplied, it is used to handle errors which
+ * occur when listeners are invoked; otherwise these errors are logged with
+ * `console.error`.
+ *
+ * `when` returns a function which is used to register listeners, or, if the
+ * listener is omitted, a promise is returned which is resolved when the
+ * delegate is called, or immediately if it has been called already. if a
+ * listener is supplied, a function is returned which can be used to unregister
+ * the listener if it hasn't already been called.
+ */
 export default function when (callback: Callback, onError: ErrorHandler = console.error) {
     type Result = { this: unknown; args: any[] };
 

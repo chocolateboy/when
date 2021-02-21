@@ -92,7 +92,7 @@ signal/notification) so that they can be consumed after they've fired.
 Several events and notifications that are published as transient,
 fire-and-forget messages are better thought of as *states*, e.g. "ready"
 notifications for services, or lifecycle events for web pages. They tend to be
-fired once, and we often need to know that they've fired *after* the fact. This
+fired once, and we often need to detect that they've fired after the fact. This
 usage is not supported by most event-emitters, and handling it manually can
 involve fiddly imperative code which obscures the simple semantics.
 
@@ -107,10 +107,9 @@ unreliable.
 `when` provides a way to pin notifications when a framework or library doesn't
 provide a way to do that itself, e.g. when consuming events produced by most
 event-emitters. But if you control/emit the notifications yourself, and want
-consumers to be able to continue subscribing to them after they've been
-published, this can be handled in the notifier itself, e.g. by using an
-event-emitter with support for pinned events such as [fixed-event][] or
-[ipc-event-emitter][].
+consumers to be able to subscribe to them after they've been published, this
+can be handled in the notifier itself, e.g. by using an event-emitter with
+support for pinned events such as [fixed-event][] or [ipc-event-emitter][].
 
 # TYPES
 
@@ -151,6 +150,9 @@ passed the same arguments and `this` value as the delegate and are executed
 asynchronously. Listeners registered after the delegate has been called are
 invoked immediately.
 
+<!-- TOC:ignore -->
+### unsubscribe
+
 When the returned function is passed a listener, it returns a function which
 can be used to unregister the listener if it hasn't already been called. The
 function returns true if the listener was unregistered (i.e. not already
@@ -166,6 +168,9 @@ if (!user.loggedIn) {
 }
 ```
 
+<!-- TOC:ignore -->
+### promise
+
 If the listener is omitted, a promise is returned which is resolved with the
 array of arguments passed to the delegate.
 
@@ -174,6 +179,9 @@ onPageShow().then(([event]) => addWidget(user))
 
 const [event] = await onPageShow()
 ```
+
+<!-- TOC:ignore -->
+### error handler
 
 `when` takes an optional error-handler which is passed any error which occurs
 when a listener is invoked. If not supplied, listener errors are logged with
@@ -189,15 +197,40 @@ onReady(() => loadFile(path))
 // errors.push(new Error("no such file..."))
 ```
 
-The delegate function records the arguments and `this` value the first time
+<!-- TOC:ignore -->
+### once
+
+The delegate function records its arguments and `this` value the first time
 it's called and subsequent calls are ignored, i.e. it behaves like it's only
-called once. This makes it safe to use with events that may be called multiple
-times, though arranging for the delegate to only be called once is still
-recommended in this case to avoid spamming it with redundant calls.
+called once. This makes it safe to use with events which may be emitted
+multiple times, though arranging for the delegate to only be called once is
+still recommended in this case to avoid spamming it with redundant calls.
 
 ```javascript
 const onBeforeLoad = when(done => {
     window.addEventListener('onbeforeload', done, { once: true })
+})
+```
+
+<!-- TOC:ignore -->
+### side effects
+
+Note that the delegating function is void, i.e. there's no way to return a
+value from it, and no way to return a different value from it each time it's
+called (since it's only executed once). There's also no way to perform a side
+effect such as stopping the propagation of an event, since listeners are
+executed asynchronously. If any of these features are needed, they can be
+handled by wrapping the delegate, e.g.
+
+```javascript
+const onReady = when(done => {
+    const wrapper = function (event) {
+        const result = handle(event) // side effects
+        done.call(this, event)       // notify listeners (once)
+        return result                // return value
+    }
+
+    emitter.on('ready', wrapper)
 })
 ```
 
@@ -215,7 +248,6 @@ The following NPM scripts are available:
 - build:release - compile the library for release and save to the target directory
 - clean - remove the target directory and its contents
 - rebuild - clean the target directory and recompile the library
-- repl - launch a node REPL with the library loaded
 - test - recompile the library and run the test suite
 - test:run - run the test suite
 - typecheck - sanity check the library's type definitions
