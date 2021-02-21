@@ -19,8 +19,13 @@ const $tsMap = ts({
 
 const $terser = terser({
     ecma: 2015,
-    compress: { passes: 2 },
-    mangle: true,
+    compress: {
+        passes: 2,
+        reduce_vars: false,
+    },
+    mangle: {
+        reserved: ['when'],
+    },
 })
 
 const cjs = () => {
