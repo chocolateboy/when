@@ -96,10 +96,10 @@ fired once, and we often need to detect that they've fired after the fact. This
 usage is not supported by most event-emitters, and handling it manually can
 involve fiddly imperative code which obscures the simple semantics.
 
-This module exports a function which effectively allows notifications to be
-*pinned* like "sticky" announcements on a notice-board or forum, rather than
-the blink-and-you-miss-it behavior of events, removing the timing-sensitivity
-which can make the event-based representation of these states inconvenient or
+This module exports a function which allows these notifications to be *pinned*
+like "sticky" announcements on a notice-board or forum, rather than the
+blink-and-you-miss-it behavior of events, removing the timing-sensitivity which
+can make the event-based representation of these states inconvenient to use or
 unreliable.
 
 ## Why not?
@@ -116,7 +116,7 @@ support for pinned events such as [fixed-event][] or [ipc-event-emitter][].
 The following types are referenced in the descriptions below.
 
 ```typescript
-export type Callback  = (done: <A extends any[]>(...args: A) => void) => void;
+export type Callback = (done: <A extends any[]>(...args: A) => void) => void;
 export type ErrorHandler = (error: any) => void;
 export type Listener = <A extends any[]>(this: unknown, ...args: A) => void;
 
@@ -155,7 +155,7 @@ invoked immediately.
 
 When the returned function is passed a listener, it returns a function which
 can be used to unregister the listener if it hasn't already been called. The
-function returns true if the listener was unregistered (i.e. not already
+function returns true if the listener is unregistered (i.e. hasn't already been
 called), or false otherwise.
 
 ```javascript

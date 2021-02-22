@@ -185,8 +185,8 @@ test.cb('error handling', t => {
     const onReady = when(
         done => emitter.once('ready', done),
         error => {
-            t.is(error.message, 'Test')
             t.assert(error instanceof Error)
+            t.is(error.message, 'Test')
             t.is(error.value, 42)
 
             if (++called === 2) {

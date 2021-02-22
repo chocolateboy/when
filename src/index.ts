@@ -1,4 +1,4 @@
-export type Callback  = (done: <A extends any[]>(...args: A) => void) => void;
+export type Callback = (done: <A extends any[]>(...args: A) => void) => void;
 export type ErrorHandler = (error: any) => void;
 export type Listener = <A extends any[]>(this: unknown, ...args: A) => void;
 
