@@ -246,7 +246,7 @@ The following NPM scripts are available:
 
 # VERSION
 
-1.0.0
+1.0.1
 
 # AUTHOR
 
@@ -261,6 +261,6 @@ terms of the [Artistic License 2.0](https://www.opensource.org/licenses/artistic
 
 [fixed-event]: https://www.npmjs.com/package/fixed-event
 [ipc-event-emitter]: https://www.npmjs.com/package/ipc-event-emitter
-[jsDelivr]: https://cdn.jsdelivr.net/npm/@chocolatey/when@1.0.0/dist/index.umd.min.js
-[unpkg]: https://unpkg.com/@chocolatey/when@1.0.0/dist/index.umd.min.js
+[jsDelivr]: https://cdn.jsdelivr.net/npm/@chocolatey/when@1.0.1/dist/index.umd.min.js
+[unpkg]: https://unpkg.com/@chocolatey/when@1.0.1/dist/index.umd.min.js
 [wl]: https://www.npmjs.com/package/wl
