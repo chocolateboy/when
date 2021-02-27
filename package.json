@@ -2,14 +2,14 @@
     "name": "@chocolatey/when",
     "version": "1.0.1",
     "description": "Subscribe to an event before or after it's fired",
+    "author": "chocolateboy",
+    "repository": "https://github.com/chocolateboy/when",
+    "license": "Artistic-2.0",
     "main": "dist/index.js",
     "module": "dist/index.esm.js",
     "unpkg": "dist/index.umd.min.js",
     "jsdelivr": "dist/index.umd.min.js",
     "types": "dist/index.d.ts",
-    "repository": "https://github.com/chocolateboy/when",
-    "author": "chocolateboy",
-    "license": "Artistic-2.0",
     "scripts": {
         "build": "rollup -c --exports default",
         "build:doc": "toc-md README.md",
@@ -31,14 +31,8 @@
         "./package.json": "./package.json"
     },
     "files": [
-        "dist/index.d.ts",
-        "dist/index.esm.d.ts",
-        "dist/index.esm.js",
-        "dist/index.js",
-        "dist/index.umd.d.ts",
-        "dist/index.umd.js",
-        "dist/index.umd.min.d.ts",
-        "dist/index.umd.min.js"
+        "dist/*.d.ts",
+        "dist/*.js"
     ],
     "browserslist": "maintained node versions",
     "devDependencies": {

@@ -18,9 +18,9 @@ export interface Subscribe {
 const DUMMY_KEY = Symbol()
 
 /*
- * execute a listener non-synchronously (in a microtask)
+ * execute a listener asynchronously (in a microtask)
  */
-const defer = typeof queueMicrotask === 'function'
+const defer = typeof queueMicrotask === 'function' // not available in node v10
     ? queueMicrotask
     : ((fn: () => void) => Promise.resolve().then(fn))
 

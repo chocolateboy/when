@@ -63,26 +63,25 @@ signal/notification) so that they can be consumed after they've fired.
 
 ## Why?
 
-Several events and notifications that are published as transient,
-fire-and-forget messages are better thought of as *states*, e.g. "ready"
-notifications for services, or lifecycle events for web pages. They tend to be
-fired once, and we often need to detect that they've fired after the fact. This
-usage is not supported by most event-emitter implementations, and handling it
-manually can involve fiddly imperative code which obscures the simple
-semantics.
+Several events and notifications that are exposed as transient, fire-and-forget
+messages are better thought of as *states*, e.g. "ready" notifications for
+services, or lifecycle events for web pages. They tend to be fired once, and we
+often need to detect that they've fired after the fact. This usage is not
+supported by most event-emitter implementations, and handling it manually can
+involve fiddly imperative code which obscures the simple semantics.
 
 This module exports a function which allows these notifications to be *pinned*
-like "sticky" announcements on a notice-board or forum, rather than the
+like "sticky" announcements on a message board or forum, rather than the
 blink-and-you-miss-it behavior of events, removing the timing-sensitivity that
-can make event-based representations of these states inconvenient to use or
+can make the event-based representation of these states inconvenient to use or
 unreliable.
 
 ## Why not?
 
 `when` provides a way to pin notifications when a framework or library doesn't
 provide a way to do that itself, e.g. when consuming events produced by most
-event-emitter libraries. But if you control/emit the notifications yourself,
-and want consumers to be able to subscribe to them after they've been
+event-emitter implementations. But if you control/emit the notifications
+yourself, and want consumers to be able to subscribe to them after they've been
 published, this can be handled in the notifier itself, e.g. by using a library
 with support for pinned events such as [fixed-event][] or
 [ipc-event-emitter][].
@@ -135,8 +134,8 @@ invoked immediately.
 
 When the returned function is passed a listener, it returns a function which
 can be used to unregister the listener if it hasn't already been called. The
-function returns true if the listener is unregistered (i.e. hasn't already been
-called), or false otherwise.
+function returns true if the listener is successfully unregistered, or false
+otherwise.
 
 ```javascript
 const unsubscribe = onPageShow(() => addWidget(user))
@@ -144,7 +143,7 @@ const unsubscribe = onPageShow(() => addWidget(user))
 // ...
 
 if (!user.loggedIn) {
-    unsubscribe() // true if unregistered
+    unsubscribe()
 }
 ```
 

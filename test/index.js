@@ -210,30 +210,30 @@ test('type checks', t => {
 
     const emitter = new Emitter()
     const callback = done => emitter.once('ready', done)
-    const foo = null
-    const bar = ['bar']
-    const baz = { baz: 'baz' }
+    const badCallback = null
+    const badErrorHandler = ['bad', 'error', 'handler']
+    const badListener = { bad: 'listener' }
 
-    error = t.throws(() => when(foo), {
+    error = t.throws(() => when(badCallback), {
         instanceOf: TypeError,
         message: /\binvalid callback\b/i,
     })
 
-    t.is(error.value, foo)
+    t.is(error.value, badCallback)
 
-    error = t.throws(() => when(callback, bar), {
+    error = t.throws(() => when(callback, badErrorHandler), {
         instanceOf: TypeError,
         message: /\binvalid error handler\b/i,
     })
 
-    t.is(error.value, bar)
+    t.is(error.value, badErrorHandler)
 
     const onReady = when(callback)
 
-    error = t.throws(() => onReady(baz), {
+    error = t.throws(() => onReady(badListener), {
         instanceOf: TypeError,
         message: /\binvalid listener\b/i,
     })
 
-    t.is(error.value, baz)
+    t.is(error.value, badListener)
 })

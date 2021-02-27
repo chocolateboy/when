@@ -1,3 +1,7 @@
+## 1.0.2 - TBD
+
+- documentation tweaks
+
 ## 1.0.1 - 2021-02-26
 
 - documentation tweaks
