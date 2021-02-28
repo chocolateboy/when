@@ -134,7 +134,7 @@ invoked immediately.
 
 When the returned function is passed a listener, it returns a function which
 can be used to unregister the listener if it hasn't already been called. The
-function returns true if the listener is successfully unregistered, or false
+function returns true if the listener was successfully unregistered, or false
 otherwise.
 
 ```javascript
@@ -182,8 +182,8 @@ onReady(() => loadFile(path))
 The delegate function records its arguments and `this` value the first time
 it's called and subsequent calls are ignored, i.e. it behaves like it's only
 called once. This makes it safe to use with events which may be emitted
-multiple times, though arranging for the delegate to only be called once is
-still recommended in this case to avoid spamming it with redundant calls.
+multiple times, though arranging for the delegate to only be called once can
+still be useful to avoid spamming it with redundant calls.
 
 ```javascript
 const onBeforeUnload = when(done => {
