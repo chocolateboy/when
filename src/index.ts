@@ -3,7 +3,7 @@ export type ErrorHandler = (error: any) => void;
 export type Listener = <A extends any[]>(this: unknown, ...args: A) => void;
 
 export interface Subscribe {
-    <A extends any[]>(): Promise<A>;
+    <A extends any[]>(): Promise<A & { this: unknown }>;
     (listener: Listener): () => boolean;
 };
 
@@ -100,7 +100,15 @@ export default function when (callback: Callback, onError: ErrorHandler = consol
             listener = checkFunction(args[0], 'listener')
         } else {
             promise = new Promise(resolve => {
-                listener = (...args) => resolve(args)
+                listener = function (...args) {
+                    resolve(
+                        Object.defineProperty(
+                            args,
+                            'this',
+                            { value: this } // non-enumerable
+                        )
+                    )
+                }
             })
         }
 

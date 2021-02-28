@@ -31,7 +31,7 @@ when - subscribe to an event before or after it's fired
 # FEATURES
 
 - no dependencies
-- &lt; 450 B minified + gzipped
+- &lt; 500 B minified + gzipped
 - fully typed (TypeScript)
 - CDN builds (UMD) - [jsDelivr][], [unpkg][]
 
@@ -98,7 +98,7 @@ export type ErrorHandler = (error: any) => void;
 export type Listener = <A extends any[]>(this: unknown, ...args: A) => void;
 
 export interface Subscribe {
-    <A extends any[]>(): Promise<A>;
+    <A extends any[]>(): Promise<A & { this: unknown }>;
     (listener: Listener): () => boolean;
 };
 ```
@@ -157,6 +157,18 @@ array of arguments passed to the delegate.
 onPageShow().then(([event]) => addWidget(user))
 
 const [event] = await onPageShow()
+```
+
+If the delegate's `this` value is needed inside the `then` function, it can be
+accessed via the `this` property on the arguments array:
+
+```javascript
+onPageShow().then(args => {
+    const [event] = args
+    const self = args.this
+})
+
+const { 0: event, this: self } = await onPageShow()
 ```
 
 <!-- TOC:ignore -->

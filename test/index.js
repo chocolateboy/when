@@ -73,10 +73,11 @@ test('promise', async t => {
     const emitter = new Emitter()
     const onReady = when(done => emitter.once('ready', done))
 
-    const listener = value => {
-        t.deepEqual(value, ['foo', 42])
+    const listener = args => {
+        t.assert(args.this instanceof Emitter)
+        t.deepEqual(args, ['foo', 42])
         ++called
-        return value
+        return args
     }
 
     const p1 = onReady().then(listener)
@@ -96,8 +97,8 @@ test.cb('this + args', t => {
     const $this = { foo: 42 }
     const got = {}
     const want = {
-        result1: [$this, 'foo', 42],
-        result2: [undefined, ['foo', 42]],
+        result1: [$this, ['foo', 42]],
+        result2: [$this, ['foo', 42]],
     }
 
     const checkDone = () => {
@@ -110,12 +111,12 @@ test.cb('this + args', t => {
     const onReady = when(done => emit = done)
 
     const listener1 = function (...args) {
-        got.result1 = [this, ...args]
+        got.result1 = [this, args]
         checkDone()
     }
 
-    const listener2 = function (...args) {
-        got.result2 = [this, ...args]
+    const listener2 = args => {
+        got.result2 = [args.this, args]
         checkDone()
     }
 
