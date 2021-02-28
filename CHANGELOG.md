@@ -1,4 +1,4 @@
-## 1.1.0 - TBD
+## 1.1.0 - 2021-02-28
 
 - promises: expose the delegate's `this` value as a (non-enumerable) property
   of the arguments array
