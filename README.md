@@ -159,8 +159,8 @@ onPageShow().then(([event]) => addWidget(user))
 const [event] = await onPageShow()
 ```
 
-If the delegate's `this` value is needed inside the `then` function, it can be
-accessed via the `this` property on the arguments array:
+The delegate's `this` value can be accessed via the `this` property on the
+arguments array:
 
 ```javascript
 onPageShow().then(args => {
