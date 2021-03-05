@@ -267,8 +267,8 @@ The following NPM scripts are available:
 
 Copyright © 2021 by chocolateboy.
 
-This is free software; you can redistribute it and/or modify it under the
-terms of the [Artistic License 2.0](https://www.opensource.org/licenses/artistic-license-2.0.php).
+This is free software; you can redistribute it and/or modify it under the terms
+of the [MIT license](https://opensource.org/licenses/MIT).
 
 [fixed-event]: https://www.npmjs.com/package/fixed-event
 [ipc-event-emitter]: https://www.npmjs.com/package/ipc-event-emitter

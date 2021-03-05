@@ -1,3 +1,7 @@
+## 1.2.0 - TBD
+
+- relicense: Artistic 2.0 -> MIT
+
 ## 1.1.0 - 2021-02-28
 
 - promises: expose the delegate's `this` value as a (non-enumerable) property
