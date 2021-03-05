@@ -257,7 +257,7 @@ The following NPM scripts are available:
 
 # VERSION
 
-1.1.0
+1.2.0
 
 # AUTHOR
 
@@ -272,6 +272,6 @@ of the [MIT license](https://opensource.org/licenses/MIT).
 
 [fixed-event]: https://www.npmjs.com/package/fixed-event
 [ipc-event-emitter]: https://www.npmjs.com/package/ipc-event-emitter
-[jsDelivr]: https://cdn.jsdelivr.net/npm/@chocolatey/when@1.1.0/dist/index.umd.min.js
-[unpkg]: https://unpkg.com/@chocolatey/when@1.1.0/dist/index.umd.min.js
+[jsDelivr]: https://cdn.jsdelivr.net/npm/@chocolatey/when
+[unpkg]: https://unpkg.com/@chocolatey/when
 [wl]: https://www.npmjs.com/package/wl
